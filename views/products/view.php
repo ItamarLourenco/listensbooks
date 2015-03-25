@@ -1,8 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use app\helpers\Util    ;
 use yii\widgets\DetailView;
-use \app\models\Categories;
+use app\models\Categories;
+use app\helpers\Language;
+use app\models\Products;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Products */
@@ -27,19 +30,23 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php
-        $model->status = Categories::getStatus($model->status);
+        $model->status = Util::outputStatus($model->status);
+        $model->language = Language::getLanguage($model->language);
+        $model->image = Products::getUrlImage($model->image);
         echo DetailView::widget([
             'model' => $model,
             'attributes' => [
                 'id',
                 'name',
                 'categories.name',
+                'language',
                 'synopsis',
                 'preview',
                 'size',
-                'time:datetime',
-                'status',
-                'created_at',
+                'time',
+                'status:html',
+                'image:image',
+                ['attribute' => 'created_at', 'format' => ['date', 'php:H:i:s d/m/Y']]
             ],
         ])
     ?>

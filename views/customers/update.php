@@ -1,23 +1,27 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use app\models\AppModel;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Customers */
+/* @var $model app\models\Favorites */
+/* @var $form ActiveForm */
 
-$this->title = 'Update Customers: ' . ' ' . $model->id;
+$this->title = Yii::t('app', 'Create Customers');
 $this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customers-update">
+
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= Html::activeHiddenInput($model, 'id') ?>
     <?= $form->field($model, 'nickname') ?>
     <?= $form->field($model, 'email') ?>
-    <?= $form->field($model, 'status') ?>
+    <?= $form->field($model, 'status')->dropDownList(AppModel::getStatus()) ?>
 
 
     <div class="form-group">

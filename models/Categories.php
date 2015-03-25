@@ -19,7 +19,7 @@ class Categories extends AppModel
      */
     public static function tableName()
     {
-        return 'categories';
+        return 'products_categories';
     }
 
     /**
@@ -48,13 +48,15 @@ class Categories extends AppModel
 
     /**
      * Get all Category for create select in HTML
+     * @param bool $empty
      * @return array
      */
     public static function getAllBySelect($empty = true)
     {
-        $options = ArrayHelper::map(Categories::find()->all(), 'id', 'name');
+        $options = ArrayHelper::map(Categories::find()->limit(1000)->all(), 'id', 'name');
         if($empty){
-            $options = array_merge(array('' => '--------'), $options);
+            $options[''] = '--------';
+            ksort($options);
         }
         return $options;
     }

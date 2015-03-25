@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\helpers\Util;
+use \app\helpers\Language;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductsSearch */
@@ -28,8 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'id',
                 'name',
                 'categories.name',
+                [
+                    'attribute' => 'language',
+                    'format' => 'text',
+                    'value' => function($data){
+                        return Language::getLanguage($data->language);
+                    },
+                ],
                 'synopsis',
                 'preview',
+                [
+                    'attribute' => 'status',
+                    'format' => 'html',
+                    'value' => function($data){
+                        return Util::outputStatus($data->status);
+                    },
+                ],
                 //'image',
                 //'size',
                 //'time:datetime',

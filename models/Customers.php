@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "customer".
@@ -13,7 +14,7 @@ use Yii;
  * @property string $status
  * @property string $created_at
  */
-class Customers extends \yii\db\ActiveRecord
+class Customers extends AppModel
 {
     /**
      * @inheritdoc
@@ -30,6 +31,7 @@ class Customers extends \yii\db\ActiveRecord
     {
         return [
             [['email'], 'required'],
+            [['email'], 'unique'],
             [['status'], 'string'],
             [['created_at'], 'safe'],
             [['nickname', 'email'], 'string', 'max' => 255]
@@ -46,7 +48,23 @@ class Customers extends \yii\db\ActiveRecord
             'nickname' => 'Como gostaria de ser chamado',
             'email' => 'Email',
             'status' => 'Status',
-            'created_at' => 'Created At',
+            'created_at' => 'Criado em',
         ];
+    }
+
+
+    /**
+     * Get all Customer for create select in HTML
+     * @param bool $empty
+     * @return array
+     */
+    public static function getAllBySelect($empty = true)
+    {
+        $options = ArrayHelper::map(Customers::find()->limit(1000)->all(), 'id', 'nickname');
+        if($empty){
+            $options[''] = '--------';
+            ksort($options);
+        }
+        return $options;
     }
 }

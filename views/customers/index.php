@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\helpers\Util;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,9 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'nickname',
             'email:email',
-            'status',
-            'created_at',
-
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function($data){
+                    return Util::outputStatus($data->status);
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

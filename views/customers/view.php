@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\helpers\Util;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Customers */
@@ -25,15 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nickname',
-            'email:email',
-            'status',
-            'created_at',
-        ],
-    ]) ?>
+    <?php
+        $model->status = Util::outputStatus($model->status);
+        echo DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'nickname',
+                'email:email',
+                'status:html',
+                ['attribute' => 'created_at', 'format' => ['date', 'php:H:i:s d/m/Y'] ],
+            ],
+        ]);
+    ?>
 
 </div>
