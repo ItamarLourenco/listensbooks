@@ -52,7 +52,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'active',
                 //'created_at',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'yii\grid\ActionColumn',
+                   'template'    => '{products_chapters} {view} {delete} {update}',
+                    'buttons' => [
+                        'products_chapters' => function ($url, $data) {
+                            return Html::a('<span class="glyphicon glyphicon-subtitles"></span>', $url, [
+                                'title' => Yii::t('app', 'New Action1'),
+                            ]);
+                        }
+                    ],
+                ]
+
             ],
         ]);
     ?>
